@@ -1,8 +1,21 @@
+require('dotenv').config();
+
 const app = require('./server.js');
 const debug = require('debug')('mongo-mongoose-practice:server');
 const http = require('http');
 
-const port = normalizePort(process.env.PORT || '4000');
+// mongoose config
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URI, {
+	useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
+// tells mongoose to use the ES6 promise implementation
+mongoose.Promise = global.Promise; 
+
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 const server = http.createServer(app);
