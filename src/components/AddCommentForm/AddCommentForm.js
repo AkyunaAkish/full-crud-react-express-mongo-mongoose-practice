@@ -10,7 +10,7 @@ function AddCommentForm(props) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('props', props);
+    
     if(formValues.author && formValues.author.trim().length &&
        formValues.content && formValues.content.trim().length) {
       axios.post(`/api/posts/${props.post._id}/comments`, formValues)

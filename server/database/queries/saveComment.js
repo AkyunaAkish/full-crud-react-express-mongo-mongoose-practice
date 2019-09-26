@@ -3,7 +3,7 @@ const Comment = require('../models/comment');
 
 module.exports = async (postId, data) => {
     // create new comment object
-    const comment = new Comment({ ...data, date: new Date() });
+    const comment = new Comment({ ...data, _post: postId, date: new Date() });
     
     // save comment to mongo
     // eslint-disable-next-line

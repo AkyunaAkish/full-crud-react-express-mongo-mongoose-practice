@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from 'react';
+import axios from 'axios';
 import './List.scss';
 
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
@@ -12,10 +13,26 @@ import moment from 'moment';
 function List(props = { data: [] }) {
   const [ showAddCommentForm, setShowAddCommentForm ] = useState({});
 
+  const handleDeletePost = async (post) => {
+    await axios.delete(`/api/posts/${post._id}`).catch((e) => console.error('failed to delete post', e));
+    props.fetchPosts();
+  };
+  
+  const handleDeleteComment = async (post, comment, ind) => {
+    await axios.delete(`/api/posts/${post._id}/comments/${comment._id}`).catch((e) => console.error('failed to delete post', e));
+    props.fetchPosts();
+    setShowAddCommentForm({ ...showAddCommentForm, [ind]: false });
+  };
+
   const renderItems = () => {
     return props.data.map((item, ind) => {
       return (
         <ListItem key={ ind }>
+          <Button onClick={ () => handleDeletePost(item, ind) }
+                  bgColor='rgb(217, 31, 22)'>
+            Delete Post
+          </Button>
+
           <div>
             Title: { item.title }
           </div>
@@ -37,19 +54,24 @@ function List(props = { data: [] }) {
 
           { showAddCommentForm[ind] ? <AddCommentForm fetchPosts={ () => {
             props.fetchPosts();
-            setShowAddCommentForm(false);
+            setShowAddCommentForm({ ...showAddCommentForm, [ind]: !showAddCommentForm[ind] });
             }} post={ item } /> : <Fragment /> }
 
-          { renderComments(item.comments) }
+          { renderComments(item, item.comments) }
         </ListItem>
       );
     });
   };
 
-  const renderComments = (comments = []) => {
+  const renderComments = (post, comments = []) => {
     return comments.map((comment, ind) => {
       return (
         <ListItemComment key={ ind }>
+          <Button onClick={ () => handleDeleteComment(post, comment, ind) }
+                  bgColor='rgb(217, 31, 22)'>
+            Delete Comment
+          </Button>
+
           <div>
             Author: { comment.author }
           </div>          
