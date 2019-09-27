@@ -10,3 +10,5 @@
 * in one terminal window/tab run yarn server
 * in another terminal window/tab run yarn client
 * the app should automatically open in the browser at http://localhost:8080
+
+#### Sorry it's not styled very nicely, wasn't my main focus :) 
