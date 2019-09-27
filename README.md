@@ -1,8 +1,8 @@
-# A posts + comments app for practicing mongo and mongoose
+# A full CRUD posts + comments app I made to practice mongo and mongoose
 
-## ReactJS(CRA), NodeJS, ExpressJS, Mongo, Mongoose
+## ReactJS, create-react-app, styled-components, NodeJS, ExpressJS, Mongo, Mongoose
 
-### To Run on Your machine
+### To Run on Your machine:
 
 * create a database named mongoose_practice in your local mongodb
 * create a .env file using the .env.example file as a template
