@@ -3,6 +3,8 @@ import axios from 'axios';
 import './List.scss';
 
 import AddCommentForm from '../AddCommentForm/AddCommentForm';
+import EditPostForm from '../EditPostForm/EditPostForm';
+import EditCommentForm from '../EditCommentForm/EditCommentForm';
 
 import ListItem from '../Styled/ListItem';
 import ListItemComment from '../Styled/ListItemComment';
@@ -12,6 +14,8 @@ import moment from 'moment';
 
 function List(props = { data: [] }) {
   const [ showAddCommentForm, setShowAddCommentForm ] = useState({});
+  const [ showEditPostForm, setShowEditPostForm ] = useState({});
+  const [ showEditCommentForm, setShowEditCommentForm ] = useState({});
 
   const handleDeletePost = async (post) => {
     await axios.delete(`/api/posts/${post._id}`).catch((e) => console.error('failed to delete post', e));
@@ -32,6 +36,18 @@ function List(props = { data: [] }) {
                   bgColor='rgb(217, 31, 22)'>
             Delete Post
           </Button>
+
+          <br />
+          
+          <Button onClick={ () => setShowEditPostForm({ ...showEditPostForm, [ind]: !showEditPostForm[ind] }) }
+                  bgColor='rgb(149, 149, 149)'>
+            Edit Post
+          </Button>
+
+          { showEditPostForm[ind] ? <EditPostForm fetchPosts={ () => {
+            props.fetchPosts();
+            setShowEditPostForm({ ...showEditPostForm, [ind]: !showEditPostForm[ind] });
+            }} post={ item } /> : <Fragment /> }
 
           <div>
             Title: { item.title }
@@ -71,6 +87,16 @@ function List(props = { data: [] }) {
                   bgColor='rgb(217, 31, 22)'>
             Delete Comment
           </Button>
+
+          <Button onClick={ () => setShowEditCommentForm({ ...showEditCommentForm, [ind]: !showEditCommentForm[ind] }) }
+                  bgColor='rgb(149, 149, 149)'>
+            Edit Comment
+          </Button>
+
+          { showEditCommentForm[ind] ? <EditCommentForm fetchPosts={ () => {
+            props.fetchPosts();
+            setShowEditCommentForm({ ...showEditCommentForm, [ind]: !showEditCommentForm[ind] });
+            }} post={ post } comment={ comment } /> : <Fragment /> }
 
           <div>
             Author: { comment.author }
