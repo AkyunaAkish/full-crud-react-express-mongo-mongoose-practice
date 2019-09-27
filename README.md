@@ -1,6 +1,6 @@
 # A full CRUD posts + comments app I made to practice mongo and mongoose
 
-## ReactJS, create-react-app, styled-components, NodeJS, ExpressJS, Mongo, Mongoose
+## Technologies used: ReactJS, create-react-app, styled-components, NodeJS, ExpressJS, Mongo, Mongoose
 
 ### To Run on Your machine:
 
